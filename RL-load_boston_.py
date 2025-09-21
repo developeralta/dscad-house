@@ -23,17 +23,17 @@ st.image("house.jpeg", caption="Casa en California")
 
 st.write("Este modelo predice el precio medio de casas en California, USA")
 
-MedInc = st.sidebar.slider("Ingreso (MedInc)", float(Xm.MedInc.min()), float(Xm.MedInc.max()))
-HouseAge = st.sidebar.slider("Edad de la casa (HouseAge)", float(Xm.HouseAge.min()), float(Xm.HouseAge.max()))
-AveRooms = st.sidebar.slider("Número de habitaciones (AveRooms)", float(Xm.AveRooms.min()), float(Xm.AveRooms.max()))
-Population = st.sidebar.slider("Población (Population)", float(Xm.Population.min()), float(Xm.Population.max()))
+aveRooms = st.sidebar.slider("Número de habitaciones (AveRooms)", float(Xm.AveRooms.min()), float(Xm.AveRooms.max()))
+houseAge = st.sidebar.slider("Edad de la casa (HouseAge)", float(Xm.HouseAge.min()), float(Xm.HouseAge.max()))
+medInc = st.sidebar.slider("Ingreso (MedInc)", float(Xm.MedInc.min()), float(Xm.MedInc.max()))
+population = st.sidebar.slider("Población (Population)", float(Xm.Population.min()), float(Xm.Population.max()))
 
 input = pd.DataFrame({
-    'MedInc': [MedInc],
-    'HouseAge': [HouseAge],
-    'AveRooms': [AveRooms],
+    'MedInc': [medInc],
+    'HouseAge': [houseAge],
+    'AveRooms': [aveRooms],
     'AveBedrms': [0],
-    'Population': [Population],
+    'Population': [population],
     'AveOccup': [0],
     'Latitude': [0],
     'Longitude': [0]
@@ -45,13 +45,12 @@ pred = LRm.predict(input)[0]
 if st.button("Predecir precio"):
     st.success(f"${pred*100000:,.2f} es el precio calculado de la casa")
 
-st.subheader("Precios reales vs Precios predichos")
-y_pred = LRm.predict(Xm_test)
+    st.subheader("Precios reales vs Precios predichos")
+    y_pred = LRm.predict(Xm_test)
 
-fig, ax = plt.subplots()
-ax.scatter(ym_test, y_pred, alpha=0.5)
-ax.set_xlabel("Precios reales")
-ax.set_ylabel("Precios predichos")
-ax.set_title("Evaluación del modelo")
-st.pyplot(fig)
-
+    fig, ax = plt.subplots()
+    ax.scatter(ym_test, y_pred, alpha=0.5)
+    ax.set_xlabel("Precios reales")
+    ax.set_ylabel("Precios predichos")
+    ax.set_title("Evaluación del modelo")
+    st.pyplot(fig)
